@@ -61,12 +61,117 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.shave">module shave</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.shave.shave">
+            function <span class="apidocSignatureSpan"></span>shave
+            <span class="apidocSignatureSpan">(target, maxHeight, opts)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.shave" id="apidoc.module.shave">module shave</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.shave.shave" id="apidoc.element.shave.shave">
+        function <span class="apidocSignatureSpan"></span>shave
+        <span class="apidocSignatureSpan">(target, maxHeight, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function shave(target, maxHeight, opts) {
+  if (!maxHeight) throw Error(&#x27;maxHeight is required&#x27;);
+  var els = typeof target === &#x27;string&#x27; ? document.querySelectorAll(target) : target;
+  if (!(&#x27;length&#x27; in els)) els = [els];
+
+  var defaults = {
+    character: &#x27;…&#x27;,
+    classname: &#x27;js-shave&#x27;,
+    spaces: true
+  };
+  var character = opts &#x26;&#x26; opts.character || defaults.character;
+  var classname = opts &#x26;&#x26; opts.classname || defaults.classname;
+  var spaces = opts &#x26;&#x26; opts.spaces === false ? false : defaults.spaces;
+  var charHtml = &#x27;&#x3c;span class=&#x22;js-shave-char&#x22;&#x3e;&#x27; + character + &#x27;&#x3c;/span&#x3e;&#x27;;
+
+  for (var i = 0; i &#x3c; els.length; i++) {
+    var el = els[i];
+    var span = el.querySelector(&#x27;.&#x27; + classname);
+
+    var textProp = el.textContent === undefined ? &#x27;innerText&#x27; : &#x27;textContent&#x27;;
+
+    // If element text has already been shaved
+    if (span) {
+      // Remove the ellipsis to recapture the original text
+      el.removeChild(el.querySelector(&#x27;.js-shave-char&#x27;));
+      el[textProp] = el[textProp]; // nuke span, recombine text
+    }
+
+    var fullText = el[textProp];
+    var words = spaces ? fullText.split(&#x27; &#x27;) : fullText;
+
+    // If 0 or 1 words, we&#x27;re done
+    if (words.length &#x3c; 2) continue;
+
+    // Temporarily remove any CSS height for text height calculation
+    var heightStyle = el.style.height;
+    el.style.height = &#x27;auto&#x27;;
+    var maxHeightStyle = el.style.maxHeight;
+    el.style.maxHeight = &#x27;none&#x27;;
+
+    // If already short enough, we&#x27;re done
+    if (el.offsetHeight &#x3c; maxHeight) {
+      el.style.height = heightStyle;
+      el.style.maxHeight = maxHeightStyle;
+      continue;
+    }
+
+    // Binary search for number of words which can fit in allotted height
+    var max = words.length - 1;
+    var min = 0;
+    var pivot = void 0;
+    while (min &#x3c; max) {
+      pivot = min + max + 1 &#x3e;&#x3e; 1;
+      el[textProp] = spaces ? words.slice(0, pivot).join(&#x27; &#x27;) : words.slice(0, pivot);
+      el.insertAdjacentHTML(&#x27;beforeend&#x27;, charHtml);
+      if (el.offsetHeight &#x3e; maxHeight) max = spaces ? pivot - 1 : pivot - 2;else min = pivot;
+    }
+
+    el[textProp] = spaces ? words.slice(0, max).join(&#x27; &#x27;) : words.slice(0, max);
+    el.insertAdjacentHTML(&#x27;beforeend&#x27;, charHtml);
+    var diff = spaces ? words.slice(max).join(&#x27; &#x27;) : words.slice(max);
+
+    el.insertAdjacentHTML(&#x27;beforeend&#x27;, &#x27;&#x3c;span class=&#x22;&#x27; + classname + &#x27;&#x22; style=&#x22;display:none;&#x22;&#x3e;&#x27; + diff + &#x27;&#x3c;/span&#x3e;&#x27;);
+
+    el.style.height = heightStyle;
+    el.style.maxHeight = maxHeightStyle;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```
+Or both:
+```javascript
+shave(&#x27;selector&#x27;, maxheight, {classname: &#x27;classname&#x27;, character: &#x27;✁&#x27; });
+```
+You can also use **shave** as a [jQuery](http://jquery.com/) or [Zepto](http://zeptojs.com/) plugin.
+```javascript
+$(&#x27;selector&#x27;).<span class="apidocCodeKeywordSpan">shave</span>(maxheight);
+```
+And here&#x27;s a _jQuery/Zepto_ example with custom options:
+```javascript
+$(&#x27;selector&#x27;).shave(maxheight, { classname: &#x27;your-css-class&#x27;, character: &#x27;✁&#x27;  });
+```
+
+If you&#x27;re using a non-spaced language, you can support shave by setting an option `spaces` to `false`.
+...</pre></li>
+    </ul>
+
 
 </div>
 

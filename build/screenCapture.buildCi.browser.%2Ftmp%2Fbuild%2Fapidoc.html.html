@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/dollarshaveclub/shave#readme"
-
-    >shave (v1.0.4)</a>
+    <a href="https://github.com/dollarshaveclub/shave#readme">shave (v1.0.4)</a>
 </h1>
 <h4>Shave is a javascript plugin that truncates multi-line text within a html element based on set max height</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.shave">module shave</a><ol>
 
@@ -86,47 +79,47 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function shave(target, maxHeight, opts) {
-  if (!maxHeight) throw Error(&#x27;maxHeight is required&#x27;);
-  var els = typeof target === &#x27;string&#x27; ? document.querySelectorAll(target) : target;
-  if (!(&#x27;length&#x27; in els)) els = [els];
+  if (!maxHeight) throw Error('maxHeight is required');
+  var els = typeof target === 'string' ? document.querySelectorAll(target) : target;
+  if (!('length' in els)) els = [els];
 
   var defaults = {
-    character: &#x27;…&#x27;,
-    classname: &#x27;js-shave&#x27;,
+    character: 'â€¦',
+    classname: 'js-shave',
     spaces: true
   };
-  var character = opts &#x26;&#x26; opts.character || defaults.character;
-  var classname = opts &#x26;&#x26; opts.classname || defaults.classname;
-  var spaces = opts &#x26;&#x26; opts.spaces === false ? false : defaults.spaces;
-  var charHtml = &#x27;&#x3c;span class=&#x22;js-shave-char&#x22;&#x3e;&#x27; + character + &#x27;&#x3c;/span&#x3e;&#x27;;
+  var character = opts &amp;&amp; opts.character || defaults.character;
+  var classname = opts &amp;&amp; opts.classname || defaults.classname;
+  var spaces = opts &amp;&amp; opts.spaces === false ? false : defaults.spaces;
+  var charHtml = '&lt;span class="js-shave-char"&gt;' + character + '&lt;/span&gt;';
 
-  for (var i = 0; i &#x3c; els.length; i++) {
+  for (var i = 0; i &lt; els.length; i++) {
     var el = els[i];
-    var span = el.querySelector(&#x27;.&#x27; + classname);
+    var span = el.querySelector('.' + classname);
 
-    var textProp = el.textContent === undefined ? &#x27;innerText&#x27; : &#x27;textContent&#x27;;
+    var textProp = el.textContent === undefined ? 'innerText' : 'textContent';
 
     // If element text has already been shaved
     if (span) {
       // Remove the ellipsis to recapture the original text
-      el.removeChild(el.querySelector(&#x27;.js-shave-char&#x27;));
+      el.removeChild(el.querySelector('.js-shave-char'));
       el[textProp] = el[textProp]; // nuke span, recombine text
     }
 
     var fullText = el[textProp];
-    var words = spaces ? fullText.split(&#x27; &#x27;) : fullText;
+    var words = spaces ? fullText.split(' ') : fullText;
 
-    // If 0 or 1 words, we&#x27;re done
-    if (words.length &#x3c; 2) continue;
+    // If 0 or 1 words, we're done
+    if (words.length &lt; 2) continue;
 
     // Temporarily remove any CSS height for text height calculation
     var heightStyle = el.style.height;
-    el.style.height = &#x27;auto&#x27;;
+    el.style.height = 'auto';
     var maxHeightStyle = el.style.maxHeight;
-    el.style.maxHeight = &#x27;none&#x27;;
+    el.style.maxHeight = 'none';
 
-    // If already short enough, we&#x27;re done
-    if (el.offsetHeight &#x3c; maxHeight) {
+    // If already short enough, we're done
+    if (el.offsetHeight &lt; maxHeight) {
       el.style.height = heightStyle;
       el.style.maxHeight = maxHeightStyle;
       continue;
@@ -136,18 +129,18 @@
     var max = words.length - 1;
     var min = 0;
     var pivot = void 0;
-    while (min &#x3c; max) {
-      pivot = min + max + 1 &#x3e;&#x3e; 1;
-      el[textProp] = spaces ? words.slice(0, pivot).join(&#x27; &#x27;) : words.slice(0, pivot);
-      el.insertAdjacentHTML(&#x27;beforeend&#x27;, charHtml);
-      if (el.offsetHeight &#x3e; maxHeight) max = spaces ? pivot - 1 : pivot - 2;else min = pivot;
+    while (min &lt; max) {
+      pivot = min + max + 1 &gt;&gt; 1;
+      el[textProp] = spaces ? words.slice(0, pivot).join(' ') : words.slice(0, pivot);
+      el.insertAdjacentHTML('beforeend', charHtml);
+      if (el.offsetHeight &gt; maxHeight) max = spaces ? pivot - 1 : pivot - 2;else min = pivot;
     }
 
-    el[textProp] = spaces ? words.slice(0, max).join(&#x27; &#x27;) : words.slice(0, max);
-    el.insertAdjacentHTML(&#x27;beforeend&#x27;, charHtml);
-    var diff = spaces ? words.slice(max).join(&#x27; &#x27;) : words.slice(max);
+    el[textProp] = spaces ? words.slice(0, max).join(' ') : words.slice(0, max);
+    el.insertAdjacentHTML('beforeend', charHtml);
+    var diff = spaces ? words.slice(max).join(' ') : words.slice(max);
 
-    el.insertAdjacentHTML(&#x27;beforeend&#x27;, &#x27;&#x3c;span class=&#x22;&#x27; + classname + &#x27;&#x22; style=&#x22;display:none;&#x22;&#x3e;&#x27; + diff + &#x27;&#x3c;/span&#x3e;&#x27;);
+    el.insertAdjacentHTML('beforeend', '&lt;span class="' + classname + '" style="display:none;"&gt;' + diff + '&lt;/span&gt;');
 
     el.style.height = heightStyle;
     el.style.maxHeight = maxHeightStyle;
@@ -157,18 +150,18 @@
 ```
 Or both:
 ```javascript
-shave(&#x27;selector&#x27;, maxheight, {classname: &#x27;classname&#x27;, character: &#x27;✁&#x27; });
+shave('selector', maxheight, {classname: 'classname', character: 'âœ' });
 ```
 You can also use **shave** as a [jQuery](http://jquery.com/) or [Zepto](http://zeptojs.com/) plugin.
 ```javascript
-$(&#x27;selector&#x27;).<span class="apidocCodeKeywordSpan">shave</span>(maxheight);
+$('selector').<span class="apidocCodeKeywordSpan">shave</span>(maxheight);
 ```
-And here&#x27;s a _jQuery/Zepto_ example with custom options:
+And here's a _jQuery/Zepto_ example with custom options:
 ```javascript
-$(&#x27;selector&#x27;).shave(maxheight, { classname: &#x27;your-css-class&#x27;, character: &#x27;✁&#x27;  });
+$('selector').shave(maxheight, { classname: 'your-css-class', character: 'âœ'  });
 ```
 
-If you&#x27;re using a non-spaced language, you can support shave by setting an option `spaces` to `false`.
+If you're using a non-spaced language, you can support shave by setting an option `spaces` to `false`.
 ...</pre></li>
     </ul>
 
@@ -181,3 +174,4 @@ If you&#x27;re using a non-spaced language, you can support shave by setting an 
     ]
 </div>
 </div>
+</body></html>
