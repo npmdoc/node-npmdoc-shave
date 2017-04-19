@@ -1,9 +1,14 @@
-# api documentation for  [shave (v1.0.4)](https://github.com/dollarshaveclub/shave#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-shave.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-shave) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-shave.svg)](https://travis-ci.org/npmdoc/node-npmdoc-shave)
+# npmdoc-shave
+
+#### api documentation for  [shave (v1.0.4)](https://github.com/dollarshaveclub/shave#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-shave.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-shave) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-shave.svg)](https://travis-ci.org/npmdoc/node-npmdoc-shave)
+
 #### Shave is a javascript plugin that truncates multi-line text within a html element based on set max height
 
-[![NPM](https://nodei.co/npm/shave.png?downloads=true)](https://www.npmjs.com/package/shave)
+[![NPM](https://nodei.co/npm/shave.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/shave)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-shave/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-shave_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-shave/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-shave/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-shave/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-shave/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-shave/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-shave/build/screenCapture.npmPackageListing.svg)
 
@@ -18,7 +23,6 @@
 {
     "author": {
         "name": "Jeff Wainwright",
-        "email": "jjwainwright2@gmail.com",
         "url": "jeffry.in"
     },
     "bugs": {
@@ -76,17 +80,14 @@
     "main": "dist/shave.js",
     "maintainers": [
         {
-            "name": "dollarshaveclub-engineering",
-            "email": "engineering.services@dollarshaveclub.com"
+            "name": "dollarshaveclub-engineering"
         },
         {
-            "name": "yowainwright",
-            "email": "jjwainwright2@gmail.com"
+            "name": "yowainwright"
         }
     ],
     "name": "shave",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/dollarshaveclub/shave.git"
@@ -98,16 +99,6 @@
     "version": "1.0.4"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module shave](#apidoc.module.shave)
-
-
-
-# <a name="apidoc.module.shave"></a>[module shave](#apidoc.module.shave)
 
 
 
